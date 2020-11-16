@@ -1,0 +1,37 @@
+import socket
+import time
+import threading
+
+
+def socket_port(ip, port):
+    # 扫描端口是否开放
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        result = s.connect_ex((ip, port))
+        if(result == 0):
+            print('%s:%d 端口开放' % (ip, port))
+        s.close()
+    except Exception as e:
+        print('扫描端口异常%s:%d' % (ip, port), e)
+
+
+def ipscan(ip, maxport):
+    try:
+        print('开始扫描', ip)
+        for i in range(maxport):
+            socket_port(ip, i)
+
+    except Exception as e:
+        print('扫描%s出错' % (ip), e)
+
+
+def ipscan_threading(ip, maxport):
+    try:
+        print('开始扫描', ip)
+        for i in range(maxport):
+            t = threading.Thread(target=socket_port, args=(ip,i))
+            t.start()
+    except Exception as e:
+        print('扫描%s出错' % (ip), e)
+
+
