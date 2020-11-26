@@ -20,14 +20,15 @@ def ipscan_threading(ip, maxport):
 
 
 if __name__ == '__main__':
-    localip = netmodule.gethostip()
+    # localip = netmodule.gethostip()
+    localip = '192.168.20.2'
     net = localip+'/24'
     iplist = IPy.IP(net, make_net=True)
-    maxport = 65535
+    maxport = 10
     for item in iplist:
         s = netmodule.getonlinestatus(str(item))
         if s:
             print(item, '在线！')
-            ipscan_threading(str(item), maxport)
+            # ipscan_threading(str(item), maxport)
         else:
             print(item, '不在线！')
